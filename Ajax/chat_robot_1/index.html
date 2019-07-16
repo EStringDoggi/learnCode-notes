@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+        body{
+            background-color:yellowgreen;
+
+        }
+        ul{
+            width: 400px;
+            border: 1px solid #000;
+            margin: 0 auto;
+        }
+        </style>
+
+    </head>
+    <body>
+        <h2>聊天机器人1</h2>
+        <input type="text" name="" value="">
+        <input type="button" name="" value="发送">
+        <h3>聊天框</h3>
+        <ul>
+
+        </ul>
+    </body>
+</html>
+<script type="text/javascript">
+    //1.点击事件
+    document.querySelector('input[type=button]').onclick = function(){
+        //创建聊天框
+        var myLi = document.createElement('li');
+        //设置内容
+        myLi.innerHTML = document.querySelector('input[type=text]').value;
+        myLi.style.backgroundColor = 'hotpink';
+        //添加到页面上
+        document.querySelector('ul').appendChild(myLi);
+
+        //ajax
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('post','chat.php');
+
+        xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+            //创建
+            var robotLi = document.createElement('li');
+            //设置
+            robotLi.innerHTML = xhr.responseText;
+            //添加
+            document.querySelector('ul').appendChild(robotLi);
+
+        }
+        xhr.send(null);
+
+    }
+
+</script>

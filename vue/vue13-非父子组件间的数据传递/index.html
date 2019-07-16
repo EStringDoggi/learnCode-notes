@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>非父子组件的数据传递</title>
+    <script src="../../js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <component1></component1>
+        <component2></component2>
+        <component3></component3>
+    </div>
+
+    <template id="com1">
+        <div>
+            <span>组件1的数据：{{name}}</span>
+            <button @click="send">发送数据name给组件3</button>
+        </div>
+    </template>
+    <template id="com2">
+        <div>
+            <span>组件2的数据：{{age}}</span>
+            <button @click="send">发送数据name给组件3</button>
+        </div>
+    </template>
+    <template id="com3">
+        <div>
+            <span>组件3的名字：{{name}}</span>
+            <span>组件3的年龄：{{age}}</span>
+        </div>
+    </template>
+</body>
+
+</html>
+<!-- 通过$emit()自定义事件、$on()侦听事件及一个空实例，在组件间传递数据 -->
+<script>
+    var bus = new Vue(); //空实例，用于事件侦听
+    var component1 = {
+        template: "#com1",
+        data() {
+            return {
+                name: "tom"
+            }
+        },
+        methods: {
+            send() {
+                bus.$emit('data1', this.name);//实例、事件名、要传递的参数
+            }
+        },
+    }
+    var component2 = {
+        template: "#com2",
+        data() {
+            return {
+                age: 22
+            }
+        },
+        methods: {
+            send() {
+                bus.$emit('data2', this.age);
+            }
+        },
+    }
+    var component3 = {
+        template: "#com3",
+        data() {
+            return {
+                name: "",
+                age:0
+            }
+        },
+        methods: {
+
+        },
+        mounted() { //模板编译完成后
+            bus.$on('data1', name => {//监听当前实例上的自定义事件。   参数：要监听的事件名、变量名
+                this.name = name
+            });
+            bus.$on('data2', age => {
+                this.age = age
+            });
+        },
+    }
+
+
+
+    var vm = new Vue({
+        el: "#app",
+        components: {
+            "component1": component1,
+            "component2": component2,
+            "component3": component3
+        }
+    })
+</script>

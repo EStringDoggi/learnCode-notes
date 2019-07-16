@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    //class类的定义
+    class father{
+        //类似于构造函数。原先的构造函数写法中，原型上有constructor方法
+        constructor(name,age){
+            this.name = name
+            this.age = age
+        }
+        //在此可以定义方法，方法在原型上，给实例调用
+        showName(){
+            console.log('调用父类的方法');
+            console.log(this.name);
+        }
+    }
+    //类的继承
+    class son extends father{
+        constructor(name,age,salary){
+            super(name,age);
+            this.salary = salary
+        }
+        showName(){
+            console.log('调用子类的方法');
+            console.log(this.name,this.age,this.salary);
+        }
+    }
+    let laowang = new father('laowang','40')
+    let xiaowang = new son('xiaowang','18',10000)
+    console.log(laowang);
+    console.log(xiaowang);
+    
+    laowang.showName();
+    //xiaowang.showName();//当父亲原型里有showName方法且子类没有重定义，直接调用
+    xiaowang.showName();//当父亲原型里有showName方法且子类没有重定义，直接调用
+    
+    
+</script>

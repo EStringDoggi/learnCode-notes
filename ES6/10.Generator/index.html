@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    function* myfunc(){
+        console.log('start');
+        yield 'step1'
+        console.log('pause 1');
+        yield 'step2'
+        console.log('pause 2');
+        let result = yield 'step3'
+        console.log('pause 3');
+        console.log(result);
+        
+    }
+
+    let func = myfunc();
+     console.log(func);
+     func.next()//start
+     console.log(func.next());//step 1
+    //  console.log(func.next('this is param'));
+    //  console.log(func.next('this is param too'));//传给result
+    
+    
+    
+</script>

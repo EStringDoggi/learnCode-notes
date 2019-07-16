@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="componentId='component1'">显示第一个组件</button>
+        <button @click="componentId='component2'">显示第二个组件</button>
+        <!-- <component1></component1>
+        <component2></component2> -->
+        
+        <!-- 使组件缓存 -->
+        <keep-alive>
+            <component :is="componentId"></component>
+        </keep-alive>
+    </div>
+</body>
+</html>
+    <template id="component1">
+        <div>{{msg}},随机数一致表示组件被缓存了：{{x}}</div>
+    </template>  
+    <template id="component2">
+        <div>{{msg}},随机数一致表示组件被缓存了：{{x}}</div>
+    </template>            
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            componentId:"component1"//根据componentId显示组件
+        },
+        components:{
+            'component1':{//左边键名就是标签名
+                template:"#component1",
+                data(){
+                    return {
+                        msg:"i am com1",
+                        x:Math.random()
+                    }
+                }
+            },
+            'component2':{
+                template:"#component2",
+                data(){
+                    return {
+                        msg:"i am com2",
+                        x:Math.random()
+
+                    }
+                }
+            }
+        }
+    })
+</script>

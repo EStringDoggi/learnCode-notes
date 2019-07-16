@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSONP</title>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/vue-resource.min.js"></script>
+    <style>
+        .select{
+            background-color: #ccc;
+        }
+        li{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="words" @keyup="JSONP($event)" @keydown.up.prevent="changeUp" @keydown.down.prevent="changeDown">
+        <button @click="JSONP">发送跨域请求</button>
+        <div>
+            <!-- <textarea name="" id="" cols="30" rows="10">{{getData}}</textarea> -->
+            <ul>
+                <li v-for="(item,index) in getData" 
+                :class="{select:index==now}"
+                >
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    window.onload = function () { 
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                now:-1,//当前索引
+                words:"",
+                tempWords:"",
+                getData:""
+            },
+            methods: {
+                JSONP:function(e){
+                    if(e.keyCode == 38|| e.keyCode == 40)
+                    //上下方向键不请求
+                    return;
+                    this.tempWords = this.words
+                    console.log(this.tempWords);
+                    
+                    //https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=&json=1&p=3&sid=1467_21094_28768_28722_28558_28585_28604_28625_28605&req=2&bs=%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%20jsonp&sc=eb&csor=0&cb=jQuery110207204259086435016_1553866971608&_=1553866971610
+                    this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+                        // this.$http.jsonp([链接],{函数体})
+                        params:{
+                            wd:this.words
+                        },
+                        jsonp:'cb'//正常默认链接是callback不需要修改，百度使用的是cb
+                    }).then(param=>{
+                        console.log(param.data.s);
+                        this.getData = param.data.s
+                    })
+                },
+                changeUp:function(){
+                    this.now--;
+                    if(this.now == -1){
+                        this.words = this.tempWords
+                        console.log("!!!!",this.tempWords);
+                        console.log("!!!!",this.words);  
+                    }
+                    else{
+                        if(this.now == -2){
+                            this.now = this.getData.length - 1
+                        }
+                        this.words = this.getData[this.now];
+                    }
+                    // else if(this.now == -2){
+                    //     this.now = this.getData.length - 1
+                    //     this.words = this.getData[this.now];
+                    // }
+                    // else{
+                    //     this.words = this.getData[this.now];
+                    // }
+                    console.log(this.now);
+                    // console.log(this.getData.length);
+                    
+
+                },changeDown:function(){
+                    this.now++;
+                    if(this.now == this.getData.length){
+                        this.now = -1
+                        this.words = this.tempWords
+                    }else{
+                        this.words = this.getData[this.now];
+                    }
+                    // if(this.now == this.getData.length -1){
+                    // }else{
+                    // }
+                    console.log(this.now);
+                    // console.log(this.tempWords);
+                    
+                }
+            },
+        })
+     }
+</script>

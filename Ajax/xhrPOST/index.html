@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>ajax发送post请求</h2>
+        <input type="button" name="" value="">
+        <span></span>
+    </body>
+</html>
+<script type="text/javascript">
+    document.querySelector('input').onclick = function(){
+        //声明对象
+        var xhr = new XMLHttpRequest();
+        //设置请求行
+        xhr.open('post','postData.php');
+        //设置请求头
+        xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+
+        //回调函数
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+            document.querySelector('span').innerHTML = xhr.responseText;
+        }
+        //请求主体发送
+        //post请求发送数据写在send中
+        xhr.send('name=西兰花&friend=鸡蛋');
+
+
+    }
+
+</script>

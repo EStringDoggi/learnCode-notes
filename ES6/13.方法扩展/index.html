@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    //1.字符串方法扩展
+    // 1.1 includes
+    // 1.2 startsWith
+    // 1.3 endsWith
+    // 1.4 repeat
+    let str = 'abc'
+    console.log(str.includes('b'));
+    console.log(str.startsWith('a'));
+    console.log(str.endsWith('c'));
+    console.log(str.repeat(3));
+    console.log('==========================');
+    
+    //2.数值方法扩展
+    //2.1 二进制0b与八进制0o
+    //2.2 Number.isFinite
+    //2.3 Number.isInteger
+    //2.4 Number.parseInt
+    //2.5 Math.trunc
+    console.log(Number.isFinite(123));
+    console.log(Number.isNaN(123));
+    console.log(Number.isInteger(123));
+    console.log(Number.parseInt('666'));
+    console.log(Math.trunc(123.456));
+    console.log('==========================');
+
+    //3.数组方法扩展
+    //3.1 Array.from 将伪数组转为数组
+    //3.2 Array.of 将值转为数组
+    //3.3 find
+    //3.4 findIndex
+    function func(param1,param2,param3){
+        return arguments
+    }
+    let result = func('zzk','22','rich')
+    Array.from(result).forEach((item,index)=>{
+        console.log(item);
+        
+    })
+    //console.log(result);
+
+    let arr =  Array.of('abc',33,3,6,9,4,3,'yes')
+    console.log(arr);
+    
+    let arr2 = arr.find((item,index)=>{
+        return item > 4
+    })
+    console.log(arr2);
+    console.log('==========================');
+    
+    //4.对象方法扩展
+    //4.1 Object.is() 判断两个数据是否相等（以字符串的形式判断的）
+    //4.2 Object.assign(target,source1,source2) 将对象属性复制到目标对象中
+    //4.3 __proto__ 操作原型
+
+    console.log(NaN == NaN);//false NaN不等于任何值
+    console.log(Object.is(NaN,NaN));//true 字符串相等
+    console.log(0 == -0);//true
+    console.log(Object.is(0,-0));//false
+    //以上是特殊情况
+    let obj1 = {}
+    let obj2 = {name:'zzk',age:22}
+    let obj3 = {salary:10000}
+    console.log(Object.assign(obj1,obj2,obj3));//{name: "zzk", age: 22, salary: 10000}
+    console.log(Object.assign(obj2));//{name: "zzk", age: 22}
+    
+    console.log('==========================');
+
+    let newArr1 = [1,2,2,3,3,4,5,6,6,7]
+    let newArr2 = newArr1
+    console.log(newArr1 == newArr2);//true
+    newArr2 = []
+    console.log(newArr1 == newArr2);//false
+    console.log(newArr1);//[1,2,2,3,3,4,5,6,6,7]
+
+    //修改某一项时会修改原数据，但覆盖似乎不会影响原数据
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</script>

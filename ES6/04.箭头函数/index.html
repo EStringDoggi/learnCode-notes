@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    //1.当函数体只有一条语句且没有{}时，直接返回结果
+    let fun1 = (x, y) => x + y;   
+    console.log(fun1(10, 20));
+
+    //2.使用return返回
+    let fun2 = (x, y) => {return x + y;}   
+    console.log(fun2(1, 2));
+
+    //3.仅有一个参数时可省略()
+    let fun3 = x => x*x;
+    console.log(fun3(4));
+
+    //箭头函数的this指向不是由调用者决定的
+    //this指向根据外层决定
+
+    //4.1this指向window
+    let obj1 = {
+        myfunction:()=>{
+            fun4 = () =>{console.log(this);}//此处的外层是obj的箭头函数，箭头函数又指向外层window
+            fun4();
+        }
+    }
+    obj1.myfunction();
+
+    //4.2this指向object
+    let obj2 = {
+        myfunction:function(){
+            fun5 = () =>{console.log(this);}//此处的外层是obj的函数
+            fun5();
+        }
+    }
+    obj2.myfunction();
+
+   
+</script>

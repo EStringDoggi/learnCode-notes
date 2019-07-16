@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>内容分发</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <component1>
+            <!-- giveName -->
+            <p slot="p1">第一段话</p>
+            <p slot="p2">第二段话</p>
+        </component1>
+    </div>
+
+
+    <template id="component1">
+        <div>
+            <h3>组件1</h3>
+            <slot>如果没有内容，则显示这句话</slot>
+            <!-- 通过slot对内容顺序的修改 -->
+            <slot name="p2"></slot>
+            <slot name="p1"></slot>
+        </div>
+    </template>
+
+
+</body>
+
+</html>
+<script>
+    // slot：命名插槽，本身也是个内置组件，用来获取组件中的原内容，可以对顺序、显隐做操作
+
+
+
+    var vm = new Vue({
+        el: "#app",
+        components: {
+            'component1': {
+                template: '#component1'
+            }
+        }
+    })
+</script>

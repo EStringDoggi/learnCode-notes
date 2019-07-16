@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .computed1{
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <my-component0></my-component0>  
+        <component-computed1></component-computed1>
+        <!-- 在定制组件时指定class：publicClass，根元素也会被赋予这个class -->
+        <component2></component2> 
+    </div>
+</body>
+</html>
+<!-- 模板1 -->
+<script type="type=text/x-template" id="my-component-computed1">
+    <div class="computed1">
+        <p>
+                <span>模块1</span>
+                <br>
+                <span>{{nowtime()}}</span>
+        </p>
+        <span>{{message}}</span>
+        <br>
+        <span>{{newMessage}}</span>
+        <br>
+        <button @click="a++">点我a加一</button>
+        <span>{{message2}}</span>
+        
+    </div>
+</script>
+<!-- 模板2 -->
+<script type="type=text/x-template" id="component2">
+    <div :class="[classObject,'publicClass']"></div>
+
+
+</script>
+<script>
+    // 功能：最基本的模板定义方法、子元素有多个时需要有统一的父元素
+Vue.component("my-component0",{
+    template:
+    `
+    <div>
+        <p>111</p>
+        <p>222</p>
+    </div>
+    `
+})
+// 功能：显示时间、computed数据处理、watch新旧值显示
+Vue.component('component-computed1',{
+    template:'#my-component-computed1',
+    data:function(){
+        return{
+            message:'zzk',
+            a:0,
+            message2:''
+
+        }
+    },
+    computed:{
+            newMessage:function(){
+              return  this.message + '頑張って'
+
+            }
+        
+    },
+    methods:{//methods注意拼写 结尾s
+        nowtime:function(){
+            return (new Date()).toLocaleTimeString();//Date记得首字母大写
+        }
+    },
+    watch:{
+        a:function(newValue,oldValue){
+            return this.message2 = "a旧值："+oldValue + "\\新值："+newValue;
+        }
+    }
+
+})
+// 功能：通过v-bind修改class
+Vue.component('component2',{
+    template:'#component2',
+    data:function(){
+        return{
+            classObject:{
+                active: true,
+                'text-danger': true
+            }
+        }
+    }
+})
+// 创建根实例
+new Vue({
+    el:"#app"
+})
+</script>

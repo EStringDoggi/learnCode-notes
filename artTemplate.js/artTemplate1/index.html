@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script type="text/javascript" src='/js/template-web.js'></script>
+        <script type="text/javascript" src='/js/jquery-3.3.1.min.js'></script>
+        <style >
+            li{
+                display: inline-block;
+                width: 300px;
+                height: 300px;
+                vertical-align: middle;
+                border: 1px solid rgb(138, 138, 138);
+            }
+            li img{
+                width: 300px;
+                height: 200px;
+                text-align: center;
+            }
+            li div span{
+                display: inline-block;
+            }
+            ul{
+                list-style: none;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <input class='addOne' type="button" name="" value="获取一个">
+        <input class="addMore" type="button" name="" value="获取多个"></input>
+        <ul class=''>
+
+        </ul>
+    </body>
+</html>
+<!--模板-->
+<script id='template' type="text/html" >
+    {{each data}}
+    <li>
+        <img src="{{@$value.article_img_url}}">
+        <h5>{{@$value.article_title}}</h5>
+        <div>
+            <span><i>赞</i>{{$value.article_zan_count}}</span>
+            <span><i>收藏</i>{{$value.article_comm_count}}</span>
+            <span><i>评论</i>{{$value.article_coll_count}}</span>
+        </div>
+
+
+    </li>
+    {{/each}}
+</script>
+<script type="text/javascript">
+    var data = {
+
+    }
+
+</script>
+<!--ajax请求-->
+<script type="text/javascript">
+    $(function(){
+        $('.addMore').click(function(){
+            $.ajax({
+                url:'getData.php',
+                data:null,
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                    console.log(template('template',data));
+                    $('ul').append(template('template',data));
+
+                }
+            })
+        })
+    })
+
+</script>

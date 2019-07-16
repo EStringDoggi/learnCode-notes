@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+
+</head>
+<body>
+    <div id='app'>
+        <input type="text" v-focus>
+    </div>
+</body>
+</html>
+<script>
+    //自定义v-focus指令
+    // Vue.directive定义全局指令 参数1：指令名称，不需要加v-,参数2：对象，指令相关的函数，在指定阶段执行相关操作
+    //参数2中 系统内置了一些钩子函数 
+    Vue.directive('focus', {
+        // bind:function(){} 当指令绑定到元素上时立即执行，只执行一次。 bind的情况是元素在内存的DOM树里还没被渲染到页面，所以执行focus()是无效的
+        // inserted:function(){} 元素插入到DOM中时执行
+        // update:function(){} 当VNode更新时执行，可能会触发多次
+        bind:function(el){//这些函数中的第一个参数永远是el,表示被绑定的元素,el参数是js原生对象
+            //el.focus()
+        },
+        inserted:function(el){
+            el.focus()//ok
+        }
+
+    })
+    let vm = new Vue({
+        el:'#app'
+        
+    })
+</script>

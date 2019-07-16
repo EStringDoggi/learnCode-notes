@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单向数据流</title>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<body>
+    <h3>
+        props是单向绑定的，父组件数据修改，子组件也修改，但子组件的修改不会反向修改父组件
+    </h3>
+    <div id="app">
+        <div>这是直接父元素获取的数据：{{name}}</div>
+        <input type="text" v-model="name">
+        <hr>
+        <com1 :name.sync="name"></com1>
+    </div>
+    <template id="tem1">
+        <div>
+            <span>这是从父元素获取的数据：{{name}}</span>
+            <br>
+            <button @click="update">修改name值</button>
+        </div>
+    </template>
+</body>
+</html>
+<script>
+ var vm = new Vue({
+     el:"#app",
+     data: {
+         name:"name"
+     },
+     components:{
+         com1:{
+             template:"#tem1",
+             props:['name'],
+             data(){
+                return{
+                    username:this.name
+                }
+             },
+             methods: {
+                update(){
+                    // this.name="子组件触发修改父组件传来的值"
+                    this.$emit('update:name','alice')//子组件修改值，会同步父组件的值
+                }
+             },
+         }
+
+     }
+ })
+</script>

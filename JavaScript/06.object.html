@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>object</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+}
+var p1 = new Person('zzk',22);
+
+console.log(p1);
+//A.isPrototypeOf(B) 判断的是A对象是否存在于B对象的原型链之中
+//个人推测：反映了p1的构造函数是Person
+console.log(Person.prototype.isPrototypeOf(p1));        //true
+console.log(p1 instanceof Person);                      //true
+console.log(Object.prototype.isPrototypeOf(Person));    //true
+console.log(Person instanceof Object);                  //true
+console.log(Object.prototype.isPrototypeOf(p1));        //true
+console.log(p1 instanceof Object);                      //true
+
+console.log(Person.prototype == p1.__proto__);          //true
+console.log(Object.prototype == Person.prototype);      //false
+console.log(Object.prototype == p1.__proto__);          //false
+
+
+
+
+// console.log(p1.__proto__);
+
+// console.log(Person.prototype);
+
+
+</script>

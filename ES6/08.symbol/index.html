@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // symbol是新的数据类型，表示独一无二的值
+    //symbol声明
+    let symbol1 = Symbol();
+    let obj = {
+        name:'zzk',
+        age:22
+    }
+    obj[symbol1] = '15240153'
+    console.log(obj);
+    //symbol具有唯一性
+    let symbol2 = Symbol();
+    let symbol3 = Symbol();
+    console.log(symbol2 == symbol3);//false
+
+    let sym1 = Symbol('one');
+    let sym2 = Symbol('one');
+    console.log(sym1 == sym2);//false
+        
+    
+</script>

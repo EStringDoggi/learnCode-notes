@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件修饰符</title>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+
+
+    <!-- stop 阻止冒泡 -->
+    <div id="example" @click="setVal1" style="border:1px solid black;width:300px;">
+        <button @click="setVal">普通按钮</button>
+        <!-- 阻止触发父元素 -->
+        <button @click.stop="setVal">阻止冒泡</button>
+        <button @click="reset">还原</button>
+        <div>{{result}}</div>
+        <br>
+
+    </div>
+
+
+    <!-- prevent 取消默认事件 -->
+    <div id="example2" style="border:1px solid black;width:300px;">
+        <a href="http://cnblogs.com" target="_blank">普通链接</a>
+        <a @click.prevent href="http://cnblogs.com" target="_blank">取消默认行为</a>
+    </div>
+
+
+    <!-- capture 事件捕获模式 -->
+    <div id="example3" @click.capture="setVal1" style="border:1px solid black;width:300px;">
+        <button @click.capture="setVal">事件捕获</button>
+        <button @click="reset">还原</button>
+        <div>{{result}}</div>
+    </div>
+
+
+    <!-- self 只触发自身，不触发子元素-->
+    <div id="example4">
+        <div @click="setVal" :style="styleObj1">
+            <div :style="styleObj2">普通</div>
+            <button @click="reset">还原</button>
+        </div>
+        <div @click.self="setVal" :style="styleObj1">
+            <div :style="styleObj2">self</div>
+            <button @click="reset">还原</button>
+        </div>
+    </div>
+
+    <!-- once 只触发一次 -->
+    <div id="example5">
+        <button @click="setVal">普通按钮</button>
+        <button @click.once="setVal">触发一次</button>
+        <button @click="reset">还原</button>
+        <div>{{result}}</div>
+    </div>
+
+    <!-- 鼠标修饰符 监听特定的滑鼠按键 -->
+    <div id="example6">
+        <button @mouseup.right="right" @mouseup.middle="middle" @mouseup.left="left">{{message}}</button>
+    </div>
+    <!-- 键值修饰符 -->
+    <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+    <input v-on:keyup.13="submit">
+    <div id="example7">
+        <button @keyup.enter="enter" @keyup.tab="tab" @keyup.delete="delete1" @keyup.esc="esc" @keyup.space="space"
+            @keyup.up="up" @keyup.down="down" @keyup.left="left" @keyup.right="right">{{message}}</button>
+
+    </div>
+    <!-- 自定义键值修饰符别名 -->
+    <div id="example8">
+        <button @keyup.a="a" @keyup.b="b">{{message}}</button>
+    </div>
+    <!-- 修饰键 -->
+    <div id="example9">
+        <!-- Click+Ctrl... -->
+        <button @click.ctrl="ctrl" @click.alt="alt" @click.shift="shift" @click.meta="meta">{{message}}</button>
+    </div>
+</body>
+
+</html>
+<script>
+    var example = new Vue({
+        el: '#example',
+        data: {
+            result: ''
+        },
+        methods: {
+            setVal(event) {
+                this.result += ' 子级 ';
+            },
+            setVal1() {
+                this.result += ' 父级 ';
+            },
+            reset() {
+                history.go()
+            }
+        }
+    })
+    //===============================
+
+    var example2 = new Vue({
+        el: '#example2'
+    })
+    //===============================
+
+    var example3 = new Vue({
+        el: '#example3',
+        data: {
+            result: ''
+        },
+        methods: {
+            setVal(event) {
+                this.result += ' 子级 ';
+            },
+            setVal1() {
+                this.result += ' 父级 ';
+            },
+            reset() {
+                history.go()
+            }
+        }
+    })
+    var styleObj1 = {
+        display: 'inline-block',
+        height: '60px',
+        width: '120px',
+        'background-color': 'lightblue'
+    };
+    var styleObj2 = {
+        display: 'inline-block',
+        height: '30px',
+        width: '60px',
+        'background-color': 'lightgreen'
+    };
+    //===============================
+
+    var example4 = new Vue({
+        el: '#example4',
+        data: {
+            styleObj1: styleObj1,
+            styleObj2: styleObj2
+        },
+        methods: {
+            setVal(event) {
+                event.target.style.outline = "solid"
+            },
+            reset() {
+                history.go()
+            }
+        }
+    })
+    //===============================
+
+    var example5 = new Vue({
+        el: '#example5',
+        data: {
+            result: ''
+        },
+        methods: {
+            setVal(event) {
+                this.result += ' 内容 ';
+            },
+            reset() {
+                history.go()
+            }
+        }
+    })
+    //===============================
+    var example6 = new Vue({
+        el: '#example6',
+        data: {
+            message: '分别用左、中、右键进行点击，会出现不同的效果'
+        },
+        methods: {
+            left() {
+                this.message = 'left'
+            },
+            right() {
+                this.message = 'right'
+            },
+            middle() {
+                this.message = 'middle'
+            },
+        }
+    })
+    //===============================
+    var example7 = new Vue({
+        el: '#example7',
+        data: {
+            message: '将光标置于按钮上后，按下键盘上不同的按键，会有不同的效果'
+        },
+        methods: {
+            enter() {
+                this.message = 'enter'
+            },
+            tab() {
+                this.message = 'tab'
+            },
+            delete1() {
+                this.message = 'delete'
+            },
+            esc() {
+                this.message = 'esc'
+            },
+            space() {
+                this.message = 'space'
+            },
+            up() {
+                this.message = 'up'
+            },
+            down() {
+                this.message = 'down'
+            },
+            left() {
+                this.message = 'left'
+            },
+            right() {
+                this.message = 'right'
+            },
+        }
+    })
+    //===============================
+
+    Vue.config.keyCodes.a = 65;
+    Vue.config.keyCodes.b = 66;
+    var example8 = new Vue({
+        el: '#example8',
+        data: {
+            message: '按下键盘上的a键或b键'
+        },
+        methods: {
+            a() {
+                this.message = 'a'
+            },
+            b() {
+                this.message = 'b'
+            },
+        }
+    })
+    //===============================
+    var example9 = new Vue({
+        el: '#example9',
+        data: {
+            message: '分别用按住辅助键ctrl、alt、shift、meta进行点击，会出现不同的效果'
+        },
+        methods: {
+            ctrl() {
+                this.message = 'ctrl'
+            },
+            alt() {
+                this.message = 'alt'
+            },
+            shift() {
+                this.message = 'shift'
+            },
+            meta() {
+                this.message = 'meta'
+            },
+        }
+    })
+    //===============================
+</script>

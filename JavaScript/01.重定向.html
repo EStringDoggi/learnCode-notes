@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>重定向</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // call()
+    // apply()
+
+function add(a,b){
+    return a + b
+}
+function sub(a,b){
+    return a - b
+}
+function func1(){
+    console.log('func1');
+}
+function func2(name){
+    this.name = name
+    this.show = function(){
+        console.log(this.name);
+    }
+}
+function func3(name){
+    // 继承，func3继承func2的方法
+    func2.call(this,name)
+}
+var a = add(4,2)
+var b = add.call(sub,4,2)   //sub调用add方法
+var c = add.call(func1,4,2)//func1调用add方法
+var d = new func2('zzk')
+var e = new func3('zzh')
+
+console.log(a);//6
+console.log(b);//6
+console.log(c);//6
+d.show();//zzk
+e.show();//zzh  因为继承，e使用func2中的方法
+
+var maxNum = Math.max.apply(null,[1,3,6,8,9])// Math.max本身只支持(param1,param2)的形式传参，如果要传个数组做判断，可以使用apply。第一个参数使用null，因为没有方法需要调用Math.max，只需要结果
+// apply()会将数组转换为一个一个参数的形式返回 (param1,param2,...)
+console.log("maxNum:",maxNum);// 9
+
+// 同理可以使用push将两个数组合并
+var arr1 = [1,2,3]
+var arr2 = [4,5,6]
+var arr3 = Array.prototype.push.apply(arr1,arr2)
+console.log("arr3:",arr3);//6    push本身返回数组长度
+var arr4 = ['a','b']
+var arr5 = ['c','d']
+arr4.push.apply(arr4,arr5)
+console.log("arr4:",arr4);//["a", "b", "c", "d"]
+
+// ******************一般在目标函数只需要n个参数列表，而不接收一个数组的形式，可以通过apply的方式巧妙地解决这个问题。******************
+
+
+
+
+
+
+</script>

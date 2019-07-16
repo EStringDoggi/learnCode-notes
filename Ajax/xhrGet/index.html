@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>用户注册</h2>
+        <h5></h5>
+        <input type="text" placeholder="请输入用户名" name="userName" value="">
+        <span></span>
+    </body>
+</html>
+<script type="text/javascript">
+        //失去焦点时发送请求
+        document.querySelector('input').onblur = function(){
+        document.querySelector('h5').innerHTML = '验证中..';
+        //创建对象
+        var xhr = new XMLHttpRequest();
+        //设置请求行
+        //xhr.open('get','getData.php?name=rose&skill=swim');
+        //xhr.open('get','checkName.php?name=' + document.querySelector('input').value);
+        xhr.open('get','checkName.php?name=' + this.value);
+        //设置请求头（get方法可以忽略，post不发送数据也可忽略）
+
+        //注册回调函数
+        xhr.onload = function(){
+            //获取数据
+            console.log(xhr.responseText);
+            document.querySelector('span').innerHTML = xhr.responseText;
+            document.querySelector('h5').innerHTML = '验证完毕';
+        }
+        //请求主体发送
+        xhr.send(null);
+    }
+</script>

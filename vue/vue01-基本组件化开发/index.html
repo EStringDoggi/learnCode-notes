@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="../../js/vue.js" charset="utf-8"></script>
+        <script src="../../js/jquery-3.3.1.min.js" charset="utf-8"></script>
+        <!--需要引入jquery-->
+        <script src="../../js/bootstrap.js" charset="utf-8"></script>
+
+        <link rel="stylesheet" href="../../css/bootstrap.css">
+        <style media="screen">
+            .complete{
+                color: yellowgreen;
+            }
+            a{
+                color:#ff9900
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-body">
+                        <h2>{{message}},{{userName[0].name}}。</h2>
+                        <h4>当前数据条数：{{todoLength}}</h4>
+                        <input  type="text"
+                                name=""
+                                value=""
+                                class="form-control"
+                                v-model="message"
+                        >
+                        <!--组件-->
+                        <!--list部分-->
+                        <todolist :todos="todos"></todolist>
+                        <!--提交list-->
+                        <todo-add :todos="todos"></todo-add>
+                    </div>
+                </div>
+            </div>
+            <span class="container">-----------------------------------------------------分割线，以下是完整组件-----------------------------------------------------</span>
+            <todo></todo>
+
+        </div>
+    </body>
+</html>
+<!--list组件-->
+<script type="text/x-template" id="todo-list">
+    <ul class="list-group" >
+        <li class="list-group-item" v-for="(todo,index) in todos"  v-bind:class="{'complete':todo.complete}">id:{{todo.id}},title:{{todo.title}},index:{{index}}
+            <button class="btn btn-xs pull-right" v-on:click="completeTodo(todo)" v-bind:class="[todo.complete?'btn-danger':'btn-success']">
+                {{todo.complete?'undo':'complete'}}
+            </button>
+            <button class="btn btn-xs btn-warning pull-right" v-on:click="delTodo(index)">delete</button>
+        </li>
+    </ul>
+</script>
+<!--提交按钮-->
+<script type="text/x-template" id="todo-add">
+    <form v-on:submit.prevent="addTodo(newTodo)">
+        <!--todo的title-->
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="add todo" v-model="newTodo.title">
+        </div>
+        <!--添加todo-->
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">add todo</button>
+        </div>
+
+    </form>
+</script>
+<!--这里封装的整个完整的功能-->
+<script type="text/x-template" id="todo-template">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-body">
+                <h2>{{message}},{{userName[0].name}}。</h2>
+                <h4>当前数据条数：{{todoLength}}</h4>
+                <input  type="text"
+                        name=""
+                        value=""
+                        class="form-control"
+                        v-model="message"
+                >
+                <ul class="list-group" >
+                    <li class="list-group-item" v-for="(todo,index) in todos" v-bind:class="{'complete':todo.complete}">id:{{todo.id}},title:{{todo.title}},index:{{index}}
+                        <button class="btn btn-xs pull-right" v-on:click="completeTodo(todo)" v-bind:class="[todo.complete?'btn-danger':'btn-success']">
+                            {{todo.complete?'undo':'complete'}}
+                        </button>
+                        <button class="btn btn-xs btn-warning pull-right" v-on:click="delTodo(index)">delete</button>
+                    </li>
+                </ul>
+                <form v-on:submit.prevent="addTodo(newTodo)" >
+                    <!--todo的title-->
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="add todo" v-model="newTodo.title">
+                    </div>
+                    <!--添加todo-->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">add todo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+    var a = true;
+    console.log(a);
+    a = !a;
+    console.log(a);
+    a = !a;
+    console.log(a);
+</script>
+<script type="text/javascript">
+    //定义组件
+    //todo-list部分
+    Vue.component('todolist',{
+        template:"#todo-list",//script type="text/x-template" 的ID
+        props:['todos'],
+        methods:{
+            delTodo(index){
+                this.todos.splice(index,1);
+            },
+            completeTodo(todo){
+                todo.complete = !todo.complete;
+            }
+        }
+
+    })
+    //todo-add部分
+    Vue.component('todo-add',{
+        template:"#todo-add",
+        props:["todos"],
+        methods:{
+            addTodo:function(newTodo){
+                newTodo.id = this.id;
+                this.todos.push(newTodo);
+                this.id++;
+                this.newTodo = {id:null,title:"",complete:false};
+            }
+        },
+        data(){
+            return{
+                newTodo:{id:"",title:"",complete:false},
+                id:4
+            }
+        }
+    })
+    //完整的模板部分
+    Vue.component('todo',{
+        template:"#todo-template",
+        data(){
+            return{
+                message:"hello",
+                userName:[
+                    {name:"zzk"}
+                ],
+                id:4,
+                //这里没有todos
+                todos:[
+                    {id:1,title:"first title",complete:false},{id:2,title:"second title",complete:false},{id:3,title:"third title",complete:false}
+                ],
+                newTodo:{id:"",title:"",complete:false}
+            }
+        },
+        //props:['todos']
+        //,
+        methods:{
+            addTodo:function(newTodo){
+                newTodo.id = this.id;
+                this.todos.push(newTodo);
+                this.id++;
+                this.newTodo = {id:null,title:"",complete:false};
+            },
+            //addTodo(newTodo){} ES6简便写法
+            delTodo(index){
+                this.todos.splice(index,1);
+            },
+            completeTodo(todo){
+                todo.complete = !todo.complete;
+            }
+
+        },
+        computed:{
+            todoLength(){
+                return this.todos.length;
+                //return 0;
+            }
+        }
+
+    })
+
+    new Vue({
+        el:"#app",
+        data:{
+            message:"hello",
+            userName:[
+                {name:"zzk"}
+            ],
+            //id:4,
+            todos:[
+                {id:1,title:"first title",complete:false},{id:2,title:"second title",complete:false},{id:3,title:"third title",complete:false}
+            ],
+            //newTodo:{id:"",title:"",complete:false}
+
+        },
+        computed:{
+            todoLength(){
+                return this.todos.length;
+            }
+        },
+        //注意单词 methods
+        /*
+        methods:{
+            addTodo:function(newTodo){
+                newTodo.id = this.id;
+                this.todos.push(newTodo);
+                this.id++;
+                this.newTodo = {id:null,title:""};
+            },
+            //addTodo(newTodo){} ES6简便写法
+            delTodo(index){
+                this.todos.splice(index,1);
+            },
+            completeTodo(todo){
+                todo.complete = !todo.complete;
+            }
+
+        }
+        */
+    })
+</script>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 根据li 输出li的index值 -->
+        <ul>
+                <li>test1</li>
+                <li>test2</li>
+                <li>test3</li>
+                <li>test4</li>
+                <li>test5</li>
+                <li>test6</li>
+                <li>test7</li>
+                <li>test8</li>
+                <li>test9</li>
+                <li>test10</li>
+            </ul>
+            <script>
+                // var lis = document.querySelectorAll('ul li');
+                // for(var i = 0, len = lis.length; i < len; i++) {
+                //     lis[i].addEventListener('click', function () {
+                //         console.log(i);
+                //     }, false);
+                // }
+            </script>
+    <!-- 结果：每次都是输出10 -->
+    <!-- 原因：存在闭包，每次都引用同一个i -->
+    <!-- 解决方法 -->
+    <!-- 方法1：var改为let -->
+    <script>
+        // var lis = document.querySelectorAll('ul li');
+        // for(let i = 0, len = lis.length; i < len; i++) {
+        //     lis[i].addEventListener('click', function () {
+        //         console.log(i);
+        //     }, false);
+        // }
+    </script>
+    <!-- 方法2:使用立即执行函数来切断闭包对外部变量i的引用 -->
+    <script>
+            // var lis = document.querySelectorAll('ul li');
+            // for(var i = 0, len = lis.length; i < len; i++) {
+            //     (function(i){
+            //         lis[i].addEventListener('click', function () {
+            //             console.log(i);
+            //         }, false);
+
+            //     })(i)
+            // }
+        </script>
+    <!-- 方法3：通过事件委托 -->
+    <script>
+     var ul = document.querySelector('ul');
+        var lis = document.querySelectorAll('ul li');
+        ul.addEventListener('click', function (e) {
+            var target = e.target;
+            console.log(lis);
+            
+            console.log(target);
+            
+            if(target.nodeName.toLowerCase() === 'li') {
+                console.log([].indexOf.call(lis, target));
+            }
+        }, false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    //1.三点运算符可以方便的做拼接
+    //...数组后 得到的是数组元素
+    let arr1 = [1, 6]
+    let arr2 = [2, 3, 4, 5]
+    let arr = [arr1[0], ...arr2, arr1[1]]
+
+    console.log(arr); //[1,2,3,4,5,6]
+    console.log(...arr); //1,2,3,4,5,6
+
+    //2.三点运算符得到 函数实参 的 数组
+    let fun1 = function (...param) {
+        console.log(param); //数组 [11,22,33]
+    }
+    //arguments只能得到伪数组
+    let fun2 = function (params) {
+        console.log(arguments); //伪数组 [11,22,33]
+    }
+    fun1([11, 22, 33]);
+    fun2([11, 22, 33]);
+</script>

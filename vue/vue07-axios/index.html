@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+    <script src="../js/axios.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="ajaxGet">get请求</button>
+        <button @click="ajaxGet2">get请求2</button>
+        <button @click="ajaxPost">post请求</button>
+    </div>
+</body>
+</html>
+<script>
+    window.onload = function () { 
+        var vm = new Vue({
+            el:'#app',
+            methods: {
+                ajaxGet:function(){
+                    axios({
+                        methods:"get",
+                        url:"data.json"
+                    })
+                    .then(data=>{
+                        console.log(data.data);
+                        
+                    })
+                    .catch(err=>{
+                        console.log("warn:",err);
+                        
+                    })
+                },
+                ajaxGet2:function(){
+                    axios.get('data.json')
+                    .then(data=>{
+                        console.log(data.data);
+                        
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        
+                    })
+                },
+                ajaxPost:function(){
+                    axios.post('getData.php','name=zzk&age=22'
+                    // ,{
+                    //     name:"zzk",
+                    //     age:'22'
+                    // }                BUG,这种方式不行
+                    )
+                    .then(data=>{
+                        console.log("post:",data);
+                        
+                    })
+                    .catch(err=>{
+                        console.log("post error:",err);
+                        
+                    })
+                }
+            },
+        })
+     }
+</script>

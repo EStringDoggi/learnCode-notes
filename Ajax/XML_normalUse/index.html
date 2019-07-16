@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>请求xml文件</h2>
+        <input type="button" name="" value="ajax获取xml文件">
+        <h3></h3>
+        <p></p>
+    </body>
+</html>
+<script type="text/javascript">
+    document.querySelector('input').onclick = function(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','backXML.php');
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200){
+                console.log(xhr.responseText);
+                console.log(xhr.responseXML);
+                console.log(xhr.responseXML.querySelector('name').innerHTML);
+
+                var name = xhr.responseXML.querySelector('name').innerHTML;
+
+                document.querySelector('h3').innerHTML = name;
+            }
+        }
+        xhr.send(null);
+    }
+</script>

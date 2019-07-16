@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // 实现一个算法，寻找字符串中出现次数最少的、并且首次出现位置最前的字符
+    // 如"cbaacfdeaebb"，符合要求的是"f"，因为他只出现了一次（次数最少）。并且比其他只出现一次的字符（如"d"）首次出现的位置最靠前。
+
+    // 我的方法1
+    var str4 = '1234a12341234a';
+    var str5 = '123412341234123412341234123412341234123412341234123412341234123412341234123412341234bacabc';
+    // 这种方法只能判断该字符只出现一次的情况
+    function foundStr(str) {
+        var arrResult = null;
+        if (typeof str === 'string') {
+            for (let i of str) {
+                if (str.indexOf(i) == str.lastIndexOf(i)) {
+                    arrResult = i;
+                    break;
+                }
+            }
+            if (arrResult != null) {
+                console.log("result:", arrResult);
+            } else {
+                console.log("没有符合的字符");
+            }
+        } else {
+            console.log('传入的不是字符串');
+        }
+    }
+    // 我的方法2
+    function foundStr3(str) {
+        console.time()
+        var obj = {}
+        var objLen = 0
+        var minNum = Infinity
+        var arrResult = null
+        if (typeof str === 'string') {
+
+            for (var i of str) {
+                // 字符被按照出现顺序放入
+                if (!obj[i]) {
+                    obj[i] = 1
+                    objLen++
+                } else {
+                    obj[i]++
+                }
+            }
+            console.log(obj);
+            //遍历得到最小值
+            for (var i in obj) {
+                if (obj[i] < minNum) {
+                    minNum = obj[i]
+                    arrResult = i
+                }
+            }
+            if (arrResult != null) {
+                console.log("result:", arrResult);
+            } else {
+                console.log("没有符合的字符");
+            }
+        } else {
+            console.log('传入的不是字符串');
+        }
+
+        console.timeEnd()
+    }
+
+    foundStr3('')
+
+    // var a = {n: 1}
+    // var b = a;
+    // a.x = a = {n: 2}
+    // console.log(a);
+    // console.log(b);
+
+    // console.log(a.x);
+    // console.log(b.x)
+</script>

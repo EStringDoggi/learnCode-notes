@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+            .div {
+                background-color: #cca;
+                height: 300px;
+            }
+        </style>
+</head>
+<body>
+        <div class="div"></div>
+    
+</body>
+</html>
+<script>
+    // 隔一秒才执行，若是连续地小于一秒的触发事件则只会间隔一秒触发一次（跟我之前写的防止连续触发的差不多）
+var throttle = function(func, delay) {           
+    var prev = Date.now();  
+    return function() {               
+        var context = this;                         //初始是你点击那一刻的时间，后面就是触发完毕后更新了的时间
+        // console.log("this:",context);// div        
+        var args = arguments;
+        // console.log("args:",args);          
+        var now = Date.now();                       //你点击触发的那一刻的时间 
+        
+        // console.log("prev:",prev);
+        if (now - prev >= delay) {                   
+            func.apply(context, args);// 这里去掉args似乎 没有影响，因为这里没有需要传的参数              
+            prev = Date.now();               
+        }           
+    }       
+}       
+function handle() {           
+    console.log(Math.random());       
+}       
+var div = document.querySelector('.div')
+div.addEventListener('click', throttle(handle, 1000));
+</script>

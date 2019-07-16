@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    //iterator机制已经部署到各种数据类型，通过for of遍历
+    //解构赋值的使用也调用了iterator接口
+    //for of循环遍历
+    let str = 'hello,zzk'
+    let arr = [1,2,66,88]
+    for(let i of str){
+        console.log(i);
+    }
+    console.log('---------');
+    for(let i of arr){
+        console.log(i);
+    }
+    
+</script>

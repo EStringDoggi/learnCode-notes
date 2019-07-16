@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let bool = true
+    let data = '数据'
+    //形式：let function = new Promise((resolve,reject)=>{});
+    let func1 = new Promise((resolve1, reject) => {//参数方法可以自定义命名
+        console.log('1');
+        setTimeout(() => {
+            console.log('2');
+            if (bool) {
+                resolve1(data); //success
+            } else {
+                reject(data); //fail
+            }
+        }, 2000);
+    });
+    console.log(3);
+    //function.then(()=>{},()=>{})//成功或失败后执行，前者成功后者失败，传参做逻辑处理
+    func1
+        .then((data) => {
+            console.log('成功！', data);
+
+        }, (data) => {
+            console.log('失败！', data);
+
+        })
+        //可接多次then，只有上次结果为成功时才进入下次回调
+        .then(()=>{
+            console.log('第二次回调 成功');
+            
+        },()=>{
+            console.log('第二次回调 失败');
+            
+        })
+</script>

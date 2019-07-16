@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>路由嵌套</title>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/vue-router.js"></script>
+    <link rel="stylesheet" href="../../css/animate.css"></link>
+    <style>
+        div {
+            padding: 20px;
+        }
+
+        .active {
+            color: orange;
+            text-decoration: none;
+        }
+
+        .user {
+            border: palevioletred 1px solid
+        }
+
+        .login,
+        .regist {
+            border: olivedrab 1px dashed
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <!-- 路由链接 -->
+            <router-link to="/home">主页</router-link>
+            <router-link to="/user">用户</router-link>
+        </div>
+        <hr>
+        <br>
+        <div>
+            <transition enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight">
+                <!-- 路由显示的页面 -->
+                <router-view></router-view>
+            </transition>
+        </div>
+        <br>
+        <hr>
+        <button @click="push">添加路由</button>
+        <button @click="replace">替换路由</button>
+    </div>
+
+    <template id="user">
+        <div class="user">
+            <h3>用户信息</h3>
+            <ul>
+                <li>
+                    <!-- 查询字符串 -->
+                    <router-link to="/user/login?name=tom&age=22">用户登录</router-link>
+                </li>
+                <li>
+                    <!-- rest风格url -->
+                    <router-link to="/user/regist/alice/123456">用户注册</router-link>
+                </li>
+            </ul>
+            <router-view></router-view>
+        </div>
+    </template>
+    <template id="login">
+        <div>
+            <div class='login'>===用户登录===</div>
+            <div>参数：{{$route.query}}</div>
+            <div>路径：{{$route.path}}</div>
+        </div>
+    </template>
+    <template id="regist">
+        <div>
+            <div class='login'>===用户注册===</div>
+            <div>参数：{{$route.params}}</div>
+            <div>路径：{{$route.path}}</div>
+        </div>
+    </template>
+</body>
+
+</html>
+<script>
+    // 路由的作用：开发单页面应用（SPA）
+    // 路由实例的方法：
+    // router.push()  添加路由
+    // router.replace()  替换路由
+    var home = {
+        template: "<div>主页</div>"
+    }
+
+    var user = {
+        template: "#user" //使用模板
+    }
+
+    var login = {
+        template: "#login"
+    }
+
+    var regist = {
+        template: "#regist"
+    }
+
+    const routes = [{
+            path: "/home",
+            component: home
+        },
+        {
+            path: "/user",
+            component: user,
+            children: [{
+                path: "login",
+                component: login
+            }, {
+                path: "regist/:username/:password", //rest风格url
+                component: regist
+            }]
+        },
+        {
+            path: "*",
+            redirect: "/home"
+        } //路径为空或不匹配时 显示page1
+    ]
+
+    const router = new VueRouter({
+        routes,
+        linkActiveClass: 'active'
+    })
+
+    var vm = new Vue({
+        el: "#app",
+        router,
+        methods: {
+            push() {
+                router.push({
+                    path: 'home'
+                }) //添加、切换路由
+            },
+            replace() {
+                router.replace({
+                    path: "home"
+                }) //切换路由，没有历史记录
+            }
+        },
+    })
+</script>

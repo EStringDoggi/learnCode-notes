@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>异步对象</h2>
+        <input type="button" name="" value="ajax请求">
+    </body>
+</html>
+<script type="text/javascript">
+    /*
+
+
+    */
+    document.querySelector('input').onclick = function () {
+        //创建异步对象
+        var xhr = new XMLHttpRequest();
+        //设置请求行
+        //参数三：是否使用异步，默认true
+        xhr.open('get','xxx.php');
+        //设置请求头
+        //注册回调函数
+        //xhr.onload = function(){
+        //    console.log(xhr.responseText);
+        //}
+        xhr.onreadystatechange = function(){
+            //只有当有结果时 采集数据
+            if(xhr.readyState == 4 && xhr.status != 404){
+                console.log(xhr.responseText);
+            }
+
+        }
+        //请求主体发送
+        xhr.send(null);
+    }
+</script>

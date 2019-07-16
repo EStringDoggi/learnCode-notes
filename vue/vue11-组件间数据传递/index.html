@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件间数据传递</title>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <father-component></father-component>
+        
+    </div>
+    <template id="fatherComponent">
+            <div>
+                <h3>我是父组件</h3>
+                <div>我的数据：{{msg}}</div>
+                <div>来自子组件的数据：{{x}}</div>
+                <!-- 注意位置，在template模板中引入子组件标签 -->
+                <child-component :father-name="name" @getchildx="getData"></child-component>
+            </div>
+        </template>
+    <template id="childComponent">
+        <div>
+            <h3>我是子组件</h3>
+            <div>我的数据：{{msg}}，{{x}}</div>
+            <div>引用父组件的name数据：{{fatherName}}</div>
+            <button @click="send">将子组件数据传给父组件</button>
+        </div>
+    </template>
+</body>
+
+</html>
+<script>
+
+    var vm = new Vue({//根组件
+        el:"#app",
+        data: {
+            
+        },
+        components:{
+            "father-component":{//父组件
+                template:"#fatherComponent",
+                data(){
+                    return{
+                        msg:"我是父组件",
+                        name:"laowang",
+                        x:''//初始化。接收子组件x值
+                    }
+                },
+                methods: {
+                    getData(x){
+                        this.x = x
+                    }
+                },
+                components:{
+                    "child-component":{
+                        template:"#childComponent",
+                        props:['father-name'],
+                        data(){
+                            return{
+                                msg:"我是子组件",
+                                x:'子组件的数据'
+                                // name:"xiaowang"
+
+                            }
+                        },
+                        methods: {
+                            send(){
+                                this.$emit('getchildx',this.x)//在子组件标签中
+                            }
+                        },
+                    }
+                }
+            }
+        }
+    })
+</script>

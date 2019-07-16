@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    let obj = {name:'zzk',age:'22',sub1:'ES6',sub2:'vue',sub3:'ajax'}
+    let {name} = obj//obj.name
+    console.log(name);//zzk
+    let{sub1,sub2,sub3} = obj//多个变量赋值，方便
+    console.log(sub1,sub2,sub3);//ES6 vue ajax
+    // 函数传参使用赋值解构的方式更方便
+    function fun({name,age}) { 
+        console.log(name,age);//zzk 22
+     }
+    fun(obj)
+
+    let obj2 = [1,2,333,'zzk',{key:'666'}]
+    let [a,b,c,d,e] = obj2//注意此处符号[]
+    console.log(a,b,c,d,e);//1 2 333 "zzk" {key: "666"}
+    
+</script>

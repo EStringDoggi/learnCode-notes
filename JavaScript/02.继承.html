@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+// 1. 原型链继承：
+// 特点：
+//     1. 父类新增原型方法/原型属性，子类都能访问到
+//     2. 无法实现多继承
+function fun1(name){
+    this.name = name
+    this.show = function(){
+        console.log("show");
+    }
+}
+function fun2(){}
+fun2.prototype = new fun1()
+var a = new fun2('zzk')
+a.show()//show
+
+
+// 2. 构造函数继承：
+// 特点：
+//     1. 可以实现多继承，通过call多个父类对象
+//     2.只能继承父类的实例属性和方法，不能继承原型属性/方法
+function fun3(){
+    this.show = function () { 
+        console.log("fun3.show");
+     }
+}
+function fun4(){
+    fun3.call(this)
+}
+var b = new fun4()
+b.show()//fun3.show
+
+// 3. 混合继承
+// 特点：
+//     1. 可以继承实例属性/方法，也可以继承原型属性/方法
+//     2. 调用了两次父类构造函数，生成两份实例，消耗一点点内存
+function fun5(){
+    this.show = function () { 
+        console.log("fun5.show");
+     }
+}
+function fun6(){
+    fun5.call(this)
+}
+fun6.prototype = new fun5()
+fun6.prototype.constructor = fun5;
+var c = new fun6()
+c.show()//fun5.show
+
+//寄生组合继承
+// 特点：
+//     1. 堪称完美
+//     2. 实现过程比较复杂
+function funParent(){
+    this.show = function(){
+        console.log("funParent.show");
+    }
+}
+function funChild(){
+    funParent.call(this)//funChild调用funParent
+}
+(function(){
+        var c = function(){}
+        c.prototype = funParent.prototype;
+        funChild.prototype = new c();
+})();
+funChild.prototype.constructor = funChild;
+
+var d = new funChild()
+d.show()
+
+</script>

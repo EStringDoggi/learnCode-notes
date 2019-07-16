@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组更新及过滤排序</title>
+    <script src="../../js/vue.js" charset="utf-8"></script>
+    <style>
+    *{
+            margin: 0;
+            padding: 0;
+        }
+    #example div{
+        border:1px dashed #ccc;
+        text-align: center;
+        padding: 10px;
+    }
+    h5{
+        font-weight: normal;
+        color: #555;
+    }
+    ul{
+        text-align: center;
+    }
+    li{
+        text-align: center;
+        display: inline;
+        border: 1px solid #999999;
+    }
+    </style>
+</head>
+<body>
+    <div id="example">
+        <div>
+            <h4>变异方法</h4>
+            <h5>会改变数组</h5>
+            <button @click='push'>push</button>
+            <button @click='pop'>pop</button>
+            <button @click='shift'>shift</button>
+            <button @click='unshift'>unshift</button>
+            <button @click='splice'>splice</button>
+            <button @click='splice2'>splice2</button>
+            <button @click='sort'>sort</button>
+            <button @click='reverse'>reverse</button>
+            <button @click='length'>length</button>
+        </div>
+        <ul>
+            <li v-for="item in items">
+                {{ item.message }}
+            </li>
+        </ul>
+        <div>
+            <h4>非变异方法</h4>
+            <h5>不会改变数组</h5>
+            <button @click='concat'>concat</button>
+            <button @click='slice'>slice</button>
+            <button @click='map'>map</button>
+            <button @click='filter'>filter</button>
+            <button @click='update'>update</button>
+            </div>
+            <ul>
+            <li v-for="item in items" >
+                {{ item }}
+            </li>
+            </ul>  
+            <div>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+    </div>
+</body>
+</html>
+<script>
+var example = new Vue({
+    el:'#example',
+    data:{
+        items:[
+            {message:'Foo'},
+            {message:'Zoo'},
+            {message:'Doo'},
+            {message:'Hoo'}
+        ],
+        addValue:{message:'NewValue'}
+    },
+    methods:{
+        push(){
+            this.items.push(this.addValue)
+        },
+        pop(){
+            this.items.pop()
+        },
+        shift(){
+            this.items.shift()
+        },
+        unshift(){
+            this.items.unshift(this.addValue)
+        },
+        splice(){
+            this.items.splice(0,1)
+        },
+        splice2(){
+            this.items.splice(2)
+        },
+        sort(){
+            this.items.sort()
+        },
+        reverse(){
+            this.items.reverse()
+        },
+        length(){
+            this.items.length = 2
+        },
+        concat(){
+            this.items = this.items.concat(this.addValue)
+        },
+        slice(){
+            this.items = this.items.slice(1)
+        },
+        map(){
+            this.items = this.items.map(function (item,index,arr) {
+                return index + item;
+              })
+        },
+        filter(){
+            this.items = this.items.filter(function (item,index,arr) {
+                return (index > 0);
+              })
+        },
+        update(){
+            this.items[3] = {'message':'update'};//不会触发更新
+        }
+    }
+})
+</script>

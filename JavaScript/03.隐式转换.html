@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>                                //true:1   false:0
+// console.log("[]==false",[]==false);                                                                                                   //true
+// console.log("![]==false",![]==false);                                                                                                 //true
+// console.log("[]==true",[]==true);                                                                                                     //false
+// console.log("![]==[]:",![]==[]);                                                                                                      //true
+
+
+// console.log("{}==false",{}==false);                                                                                                   //false        空对象既不等于true也不等于false
+// console.log("{}==true:",{}==true);                                                                                                    //false
+
+// console.log("'11'+1",'11'+1);                                                                                                         //111
+// console.log("'11'+1-'2'",'11'+1-'2');                                                                                                 //109
+// console.log("'100'-'10'",'100'-'10');                                                                                                 //90
+// console.log("1==true:",1==true);                                                                                                      //true
+// console.log("2==true:",2==true);                                                                                                      //false         //注意
+
+
+// console.log("null == false:",null == false);                                                                                          //false        null既不等于true也不等于false
+// console.log("null == true:",null == true);                                                                                            //false
+// console.log("undefined == false:",undefined == false);                                                                                //false        undefined既不等于true也不等于false
+// console.log("undefined == true:",undefined == true);                                                                                  //false
+
+// console.log("undefined == null",undefined == null);                                                                                   //true
+
+var bool_null = Boolean(null);
+console.log("bool_null",bool_null);                                                                                                      //false
+console.log("NaN == NaN",NaN == NaN);                                                                                                    //false
+                                                                                           
+console.log(Number(null));                                                                                                               //0
+console.log(Number(undefined));                                                                                                          //NaN
+console.log(Number(""));                                                                                                                 //0
+console.log(Number("12.3"));                                                                                                             //12.3
+console.log(Number("0012.3"));                                                                                                           //12.3
+console.log(parseInt("123hello"));                                                                                                       //123
+console.log(parseInt("hello123"));                                                                                                       //NaN
+console.log(parseInt(""));                                                                                                               //NaN
+console.log(parseInt("070"));                                                                                                            //70   ES3中当做八进制转换为56。该函数可接参数2指定进制 如：8,10,16
+
+var str;
+console.log(String(str));                                                                                                                 //undefined
+
+
+
+
+
+
+
+
+</script>
